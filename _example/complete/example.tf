@@ -38,6 +38,7 @@ module "efs" {
   environment = "test"
   label_order = ["environment", "name", "application"]
 
+  creation_token     = "tokename"
   region             = "us-east-1"
   availability_zones = ["us-east-1b", "us-east-1c"]
   vpc_id             = module.vpc.vpc_id

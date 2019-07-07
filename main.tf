@@ -8,6 +8,7 @@ module "label" {
 
 resource "aws_efs_file_system" "default" {
   count                           = var.efs_enabled ? 1 : 0
+  creation_token                  = var.creation_token
   tags                            = module.label.tags
   encrypted                       = var.encrypted
   performance_mode                = var.performance_mode

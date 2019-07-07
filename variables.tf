@@ -21,6 +21,11 @@ variable "efs_enabled" {
   default     = true
 }
 
+variable "creation_token" {
+  type        = string
+  description = "A unique name (a maximum of 64 characters are allowed) used as reference when creating the EFS"
+}
+
 variable "vpc_id" {
   type        = string
   description = "VPC ID"
