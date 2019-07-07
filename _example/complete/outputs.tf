@@ -1,6 +1,7 @@
 output "vpc_id" {
   value = module.vpc.vpc_id
 }
+
 output "public_subnet_cidrs" {
   value = module.subnets.public_subnet_cidrs
 }
@@ -22,7 +23,6 @@ output "efs_id" {
   value       = module.efs.id
   description = "EFS ID"
 }
-
 
 output "efs_mount_target_ids" {
   value       = module.efs.mount_target_ids
