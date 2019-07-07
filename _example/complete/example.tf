@@ -3,7 +3,7 @@ provider "aws" {
 }
 
 module "vpc" {
-  source = "git::https://github.com/clouddrove/terraform-aws-vpc.git?ref=master"
+  source = "git::https://github.com/clouddrove/terraform-aws-vpc.git"
 
   name        = "vpc"
   application = "clouddrove"
@@ -33,7 +33,7 @@ module "subnets" {
 module "efs" {
   source = "git::https://github.com/clouddrove/terraform-aws-efs.git"
 
-  name        = "vpc"
+  name        = "efs"
   application = "clouddrove"
   environment = "test"
   label_order = ["environment", "name", "application"]
@@ -42,6 +42,6 @@ module "efs" {
   region             = "us-east-1"
   availability_zones = ["us-east-1b", "us-east-1c"]
   vpc_id             = module.vpc.vpc_id
-  subnets            = module.subnets.private_subnet_ids
-  security_groups    = [module.vpc.vpc_default_security_group_id]
+  subnets            = module.subnets.private_subnet_id
+  security_groups    = module.vpc.vpc_default_security_group_id
 }

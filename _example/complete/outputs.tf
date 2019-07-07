@@ -1,3 +1,6 @@
+output "vpc_id" {
+  value = module.vpc.vpc_id
+}
 output "public_subnet_cidrs" {
   value = module.subnets.public_subnet_cidrs
 }
@@ -20,10 +23,6 @@ output "efs_id" {
   description = "EFS ID"
 }
 
-output "efs_host" {
-  value       = module.efs.host
-  description = "Route53 DNS hostname for the EFS"
-}
 
 output "efs_mount_target_ids" {
   value       = module.efs.mount_target_ids
