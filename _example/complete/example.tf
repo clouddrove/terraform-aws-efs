@@ -22,11 +22,11 @@ module "subnets" {
   environment = var.environment
   label_order = var.label_order
 
-  availability_zones  = ["us-east-1a", "us-east-1b", "us-east-1c"]
+  availability_zones  = ["${var.region}a", "${var.region}b", "${var.region}c"]
   vpc_id              = module.vpc.vpc_id
-  type                = "public-private"
+  type                = var.subnet_type
   igw_id              = module.vpc.igw_id
-  nat_gateway_enabled = "true"
+  nat_gateway_enabled = var.nat_gateway
   cidr_block          = module.vpc.vpc_cidr_block
 }
 
@@ -38,7 +38,7 @@ module "efs" {
   environment = var.environment
   label_order = var.label_order
 
-  creation_token     = "tokename"
+  creation_token     = var.token
   region             = var.region
   availability_zones = ["${var.region}b", "${var.region}c"]
   vpc_id             = module.vpc.vpc_id
