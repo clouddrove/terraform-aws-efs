@@ -1,3 +1,5 @@
+#Module      : LABEL
+#Description : Terraform label module variables.
 variable "name" {
   description = "Solution name, e.g. `app`"
 }
@@ -16,6 +18,8 @@ variable "label_order" {
   description = "label order, e.g. `name`,`application`"
 }
 
+# Module      : EFS
+# Description : Terraform EFS  module variables.
 variable "security_groups" {
   type        = list(string)
   description = "Security group IDs to allow access to the EFS"

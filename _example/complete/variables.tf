@@ -1,9 +1,7 @@
-# Region
 variable "region" {
   default = "us-east-1"
 }
 
-## Tags
 variable "application" {
   default = "clouddrove"
 }
@@ -18,7 +16,6 @@ variable "label_order" {
   description = "label order, e.g. `name`,`application`"
 }
 
-# Network
 variable "cidr_block" {
   default = "10.0.0.0/16"
 }
@@ -31,7 +28,6 @@ variable "nat_gateway" {
   default = false
 }
 
-#EFS
 variable "token" {
   default = "changeme"
 }

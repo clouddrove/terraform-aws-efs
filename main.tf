@@ -1,3 +1,10 @@
+# Managed By : CloudDrove
+# Description : This Script is used to create security group.
+# Copyright @ CloudDrove. All Right Reserved.
+
+#Module      : Label
+#Description : Terraform module to create consistent naming for multiple names.
+
 module "label" {
   source      = "git::https://github.com/clouddrove/terraform-labels"
   name        = "label"
@@ -6,6 +13,8 @@ module "label" {
   label_order = ["name", "application", "environment"]
 }
 
+#Module      : EFS
+#Description : Provides a efs resource.
 resource "aws_efs_file_system" "default" {
   count                           = var.efs_enabled ? 1 : 0
   creation_token                  = var.creation_token
@@ -16,6 +25,8 @@ resource "aws_efs_file_system" "default" {
   throughput_mode                 = var.throughput_mode
 }
 
+#Module      : EFS
+#Description : Provides a efs resource mount target.
 resource "aws_efs_mount_target" "default" {
   count           = var.efs_enabled && length(var.availability_zones) > 0 ? length(var.availability_zones) : 0
   file_system_id  = join("", aws_efs_file_system.default.*.id)
@@ -24,6 +35,8 @@ resource "aws_efs_mount_target" "default" {
   security_groups = [join("", aws_security_group.default.*.id)]
 }
 
+#Module      : SECURITY GROUP
+#Description : Provides a security group resource.
 resource "aws_security_group" "default" {
   count       = var.efs_enabled ? 1 : 0
   name        = module.label.id
