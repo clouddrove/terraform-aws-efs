@@ -13,7 +13,6 @@ module "vpc" {
   cidr_block = var.cidr_block
 }
 
-
 module "subnets" {
   source = "git::https://github.com/clouddrove/terraform-aws-subnet.git"
 
