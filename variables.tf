@@ -10,6 +10,12 @@ variable "environment" {
   description = "Environment, e.g. `prod`, `staging`, `dev`, or `test`"
 }
 
+variable "label_order" {
+  type        = list
+  default     = []
+  description = "label order, e.g. `name`,`application`"
+}
+
 variable "security_groups" {
   type        = list(string)
   description = "Security group IDs to allow access to the EFS"

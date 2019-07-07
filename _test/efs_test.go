@@ -6,18 +6,18 @@ package test
 
 import (
 	"testing"
-	"strings"
-	"github.com/stretchr/testify/assert"
+	//"strings"
+	//"github.com/stretchr/testify/assert"
 	"github.com/gruntwork-io/terratest/modules/terraform"
 )
 
-func TestS3(t *testing.T) {
+func TestEFS(t *testing.T) {
 	t.Parallel()
 
 	terraformOptions := &terraform.Options{
 
 		// Source path of Terraform directory.
-		TerraformDir: "../_example/",
+		TerraformDir: "../_example/complete",
 		Upgrade: true,
 	}
 
@@ -26,10 +26,4 @@ func TestS3(t *testing.T) {
 
 	// At the end of the test, run `terraform destroy` to clean up any resources that were created
 	defer terraform.Destroy(t, terraformOptions)
-
-	efsId := strings.Join(terraform.OutputList(t, terraformOptions, "efsId")," ")
-
-	expectedS3BucketId := "dev-website-bucket-clouddrove"
-	// Verify we're getting back the outputs we expect
-	assert.Equal(t, expectedS3BucketId, efsId)
 }
