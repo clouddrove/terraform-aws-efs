@@ -18,6 +18,12 @@ variable "label_order" {
   description = "label order, e.g. `name`,`application`"
 }
 
+variable "managedby" {
+  type        = string
+  default     = "anmol@clouddrove.com"
+  description = "ManagedBy, eg 'CloudDrove' or 'AnmolNagpal'."
+}
+
 # Module      : EFS
 # Description : Terraform EFS  module variables.
 variable "security_groups" {

@@ -6,11 +6,13 @@
 #Description : Terraform module to create consistent naming for multiple names.
 
 module "label" {
-  source      = "git::https://github.com/clouddrove/terraform-labels"
-  name        = "label"
-  application = "clouddrove"
-  environment = "test"
-  label_order = ["name", "application", "environment"]
+  source      = "git::https://github.com/clouddrove/terraform-labels.git?ref=tags/0.12.0"
+  name        = var.name
+  application = var.application
+  environment = var.environment
+  label_order = var.label_order
+  managedby   = var.managedby
+  enabled     = var.efs_enabled
 }
 
 #Module      : EFS

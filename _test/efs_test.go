@@ -16,7 +16,7 @@ func TestEFS(t *testing.T) {
 
 	terraformOptions := &terraform.Options{
 		// Source path of Terraform directory.
-		TerraformDir: "../_example/complete",
+		TerraformDir: "../_example",
 		Upgrade:      true,
 	}
 
@@ -30,5 +30,5 @@ func TestEFS(t *testing.T) {
 	keyArn := terraform.Output(t, terraformOptions, "efs_arn")
 
 	// Verify we're getting back the outputs we expect
-	assert.Contains(t, keyArn, "arn:aws:elasticfilesystem:us-east-1:866067750630:file-system/")
+	assert.Contains(t, keyArn, "arn:aws:elasticfilesystem")
 }
