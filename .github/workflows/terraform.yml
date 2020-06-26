@@ -14,8 +14,6 @@ jobs:
       - name: 'Terraform Init'
         uses: clouddrove/github-actions@v2.0
         with:
-          actions_subcommand: 'init'
-          tf_actions_working_dir: ./_example/single-account
 
       - name: Configure AWS Credentials
         uses: clouddrove/configure-aws-credentials@v1
