@@ -11,10 +11,6 @@ jobs:
       - name: 'Checkout'
         uses: actions/checkout@master
 
-      - name: 'Terraform Init'
-        uses: clouddrove/github-actions@v2.0
-        with:
-
       - name: Configure AWS Credentials
         uses: clouddrove/configure-aws-credentials@v1
         with:
