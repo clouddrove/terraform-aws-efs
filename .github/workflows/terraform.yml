@@ -22,7 +22,7 @@ jobs:
         uses: clouddrove/github-actions@v2.0
         with:
           actions_subcommand: 'terratest'
-          tf_actions_working_dir: ./_test
+          tf_actions_working_dir: ./_test/efs_test.go
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
