@@ -6,7 +6,7 @@
 #Description : Terraform module to create consistent naming for multiple names.
 
 module "label" {
-  source      = "git::https://github.com/clouddrove/terraform-labels.git?ref=tags/0.12.0"
+  source      = "git::https://github.com/clouddrove/terraform-labels.git?ref=tags/0.13.0"
   name        = var.name
   application = var.application
   environment = var.environment
@@ -25,6 +25,7 @@ resource "aws_efs_file_system" "default" {
   performance_mode                = var.performance_mode
   provisioned_throughput_in_mibps = var.provisioned_throughput_in_mibps
   throughput_mode                 = var.throughput_mode
+  kms_key_id                      = var.kms_key_id
 }
 
 #Module      : EFS
