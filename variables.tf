@@ -115,3 +115,8 @@ variable "mount_target_ip_address" {
   default     = ""
 }
 
+variable "kms_key_id" {
+  type        = string
+  description = "The ARN for the KMS encryption key. When specifying kms_key_id, encrypted needs to be set to true."
+  default     = ""
+}
