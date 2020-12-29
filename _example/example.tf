@@ -3,10 +3,9 @@ provider "aws" {
 }
 
 module "vpc" {
-  source      = "clouddrove/vpc/aws"
-  version     = "0.13.0"
+  source      = "git::https://github.com/clouddrove/terraform-aws-vpc.git?ref=0.14"
   name        = "vpc"
-  application = var.application
+  repository  = var.repository
   environment = var.environment
   label_order = var.label_order
 
@@ -14,10 +13,9 @@ module "vpc" {
 }
 
 module "subnets" {
-  source      = "clouddrove/subnet/aws"
-  version     = "0.13.0"
+  source      = "git::https://github.com/clouddrove/terraform-aws-subnet.git?ref=0.14"
   name        = "subnet"
-  application = var.application
+  repository  = var.repository
   environment = var.environment
   label_order = var.label_order
 
@@ -36,7 +34,7 @@ module "efs" {
   source = "./.."
 
   name        = "efs"
-  application = var.application
+  repository  = var.repository
   environment = var.environment
   label_order = var.label_order
 
