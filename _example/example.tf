@@ -16,6 +16,7 @@ module "subnets" {
 
   name               = "subnet"
   availability_zones = ["us-east-1a", "us-east-1b"]
+  repository         = "https://registry.terraform.io/modules/clouddrove/subnet/aws/0.14.0"
   vpc_id             = module.vpc.vpc_id
   cidr_block         = module.vpc.vpc_cidr_block
   type               = "public"
