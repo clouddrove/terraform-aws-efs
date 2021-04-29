@@ -39,9 +39,6 @@ usage : |-
         source             = "clouddrove/efs/aws"
         version            = "0.14.0"
         name               = "efs"
-        repository         = var.repository
-        environment        = var.environment
-        label_order        = var.label_order
         creation_token     = var.token
         region             = var.region
         availability_zones = ["${var.region}b", "${var.region}c"]

@@ -30,6 +30,7 @@ output "efs_mount_target_ids" {
 }
 
 output "efs_mount_target_ips" {
+  sensitive   = true
   value       = module.efs.mount_target_ips
   description = "List of EFS mount target IPs (one per Availability Zone)"
 }

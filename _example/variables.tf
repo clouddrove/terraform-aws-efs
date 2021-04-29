@@ -4,7 +4,7 @@ variable "region" {
 
 variable "repository" {
   type        = string
-  default     = ""
+  default     = "https://github.com/clouddrove/terraform-aws-efs"
   description = "Terraform current module repo"
 
   validation {
@@ -19,7 +19,7 @@ variable "environment" {
 }
 
 variable "label_order" {
-  type        = list
+  type        = list(any)
   default     = ["name", "environment"]
   description = "label order, e.g. `name`,`application`"
 }

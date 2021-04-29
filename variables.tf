@@ -6,7 +6,7 @@ variable "name" {
 
 variable "repository" {
   type        = string
-  default     = ""
+  default     = "https://registry.terraform.io/modules/clouddrove/subnet/aws/0.14.0"
   description = "Terraform current module repo"
 
   validation {
@@ -18,13 +18,13 @@ variable "repository" {
 
 variable "environment" {
   type        = string
-  default     = ""
+  default     = "test"
   description = "Environment (e.g. `prod`, `dev`, `staging`)."
 }
 
 variable "label_order" {
-  type        = list
-  default     = []
+  type        = list(any)
+  default     = ["name", "environment"]
   description = "label order, e.g. `name`,`application`"
 }
 
