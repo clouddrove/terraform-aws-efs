@@ -16,6 +16,7 @@ output "mount_target_ids" {
 }
 
 output "mount_target_ips" {
+  sensitive   = true
   value       = [coalescelist(aws_efs_mount_target.default.*.ip_address, [""])]
   description = "List of EFS mount target IPs (one per Availability Zone)"
 }

@@ -4,24 +4,34 @@ variable "name" {
   description = "Solution name, e.g. `app`"
 }
 
-variable "application" {
-  description = "Application name, e.g. `cd` or `CloudDrove`"
+variable "repository" {
+  type        = string
+  default     = "https://registry.terraform.io/modules/clouddrove/subnet/aws/0.14.0"
+  description = "Terraform current module repo"
+
+  validation {
+    # regex(...) fails if it cannot find a match
+    condition     = can(regex("^https://", var.repository))
+    error_message = "The module-repo value must be a valid Git repo link."
+  }
 }
 
 variable "environment" {
-  description = "Environment, e.g. `prod`, `staging`, `dev`, or `test`"
+  type        = string
+  default     = "test"
+  description = "Environment (e.g. `prod`, `dev`, `staging`)."
 }
 
 variable "label_order" {
-  type        = list
-  default     = []
+  type        = list(any)
+  default     = ["name", "environment"]
   description = "label order, e.g. `name`,`application`"
 }
 
 variable "managedby" {
   type        = string
-  default     = "anmol@clouddrove.com"
-  description = "ManagedBy, eg 'CloudDrove' or 'AnmolNagpal'."
+  default     = "hello@clouddrove.com"
+  description = "ManagedBy, eg 'CloudDrove'."
 }
 
 # Module      : EFS
@@ -29,6 +39,7 @@ variable "managedby" {
 variable "security_groups" {
   type        = list(string)
   description = "Security group IDs to allow access to the EFS"
+  sensitive   = true
 }
 
 variable "efs_enabled" {
@@ -45,6 +56,7 @@ variable "creation_token" {
 variable "vpc_id" {
   type        = string
   description = "VPC ID"
+  sensitive   = true
 }
 
 variable "region" {
@@ -55,17 +67,20 @@ variable "region" {
 variable "subnets" {
   type        = list(string)
   description = "Subnet IDs"
+  sensitive   = true
 }
 
 variable "availability_zones" {
   type        = list(string)
   description = "Availability Zone IDs"
+  sensitive   = true
 }
 
 variable "zone_id" {
   type        = string
   description = "Route53 DNS zone ID"
   default     = ""
+  sensitive   = true
 }
 
 variable "delimiter" {
@@ -113,10 +128,12 @@ variable "mount_target_ip_address" {
   type        = string
   description = "The address (within the address range of the specified subnet) at which the file system may be mounted via the mount target"
   default     = ""
+  sensitive   = true
 }
 
 variable "kms_key_id" {
   type        = string
   description = "The ARN for the KMS encryption key. When specifying kms_key_id, encrypted needs to be set to true."
   default     = ""
+  sensitive   = true
 }

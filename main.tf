@@ -6,9 +6,10 @@
 #Description : Terraform module to create consistent naming for multiple names.
 
 module "label" {
-  source      = "git::https://github.com/clouddrove/terraform-labels.git?ref=tags/0.13.0"
+  source = "git::https://github.com/clouddrove/terraform-labels.git?ref=tags/0.14.0"
+
   name        = var.name
-  application = var.application
+  repository  = var.repository
   environment = var.environment
   label_order = var.label_order
   managedby   = var.managedby
