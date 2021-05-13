@@ -104,7 +104,7 @@ variable "tags" {
 variable "encrypted" {
   type        = bool
   description = "If true, the file system will be encrypted"
-  default     = false
+  default     = true
 }
 
 variable "performance_mode" {
