@@ -98,8 +98,8 @@ variable "attributes" {
 
 variable "tags" {
   type        = map(string)
-  description = "Additional tags (e.g. `{ BusinessUnit = \"XYZ\" }`"
   default     = {}
+  description = "Additional tags (e.g. `{ BusinessUnit = \"XYZ\" }`"
 }
 
 variable "encrypted" {
@@ -123,20 +123,21 @@ variable "provisioned_throughput_in_mibps" {
 
 variable "throughput_mode" {
   type        = string
-  description = "Throughput mode for the file system. Defaults to bursting. Valid values: `bursting`, `provisioned`. When using `provisioned`, also set `provisioned_throughput_in_mibps`"
   default     = "bursting"
+  description = "Throughput mode for the file system. Defaults to bursting. Valid values: `bursting`, `provisioned`. When using `provisioned`, also set `provisioned_throughput_in_mibps`"
+
 }
 
 variable "mount_target_ip_address" {
   type        = string
-  description = "The address (within the address range of the specified subnet) at which the file system may be mounted via the mount target"
   default     = ""
   sensitive   = true
+  description = "The address (within the address range of the specified subnet) at which the file system may be mounted via the mount target"
 }
 
 variable "kms_key_id" {
   type        = string
-  description = "The ARN for the KMS encryption key. When specifying kms_key_id, encrypted needs to be set to true."
   default     = ""
   sensitive   = true
+  description = "The ARN for the KMS encryption key. When specifying kms_key_id, encrypted needs to be set to true."
 }
