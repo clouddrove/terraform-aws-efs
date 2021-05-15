@@ -38,14 +38,14 @@ variable "managedby" {
 # Description : Terraform EFS  module variables.
 variable "security_groups" {
   type        = list(string)
-  description = "Security group IDs to allow access to the EFS"
   sensitive   = true
+  description = "Security group IDs to allow access to the EFS"
 }
 
 variable "efs_enabled" {
   type        = bool
-  description = "Set to false to prevent the module from creating any resources"
   default     = true
+  description = "Set to false to prevent the module from creating any resources"
 }
 
 variable "creation_token" {
@@ -55,8 +55,8 @@ variable "creation_token" {
 
 variable "vpc_id" {
   type        = string
-  description = "VPC ID"
   sensitive   = true
+  description = "VPC ID"
 }
 
 variable "region" {
@@ -66,51 +66,54 @@ variable "region" {
 
 variable "subnets" {
   type        = list(string)
-  description = "Subnet IDs"
   sensitive   = true
+  description = "Subnet IDs"
 }
 
 variable "availability_zones" {
   type        = list(string)
-  description = "Availability Zone IDs"
   sensitive   = true
+  description = "Availability Zone IDs"
 }
 
 variable "zone_id" {
   type        = string
-  description = "Route53 DNS zone ID"
   default     = ""
   sensitive   = true
+  description = "Route53 DNS zone ID"
 }
 
 variable "delimiter" {
   type        = string
-  description = "Delimiter to be used between `namespace`, `stage`, `name` and `attributes`"
   default     = "-"
+  description = "Delimiter to be used between `namespace`, `stage`, `name` and `attributes`"
+
 }
 
 variable "attributes" {
   type        = list(string)
-  description = "Additional attributes (e.g. `1`)"
   default     = []
+  description = "If true, the file system will be encrypted"
 }
 
 variable "tags" {
   type        = map(string)
-  description = "Additional tags (e.g. `{ BusinessUnit = \"XYZ\" }`"
   default     = {}
+  description = "Additional tags (e.g. `{ BusinessUnit = \"XYZ\" }`"
 }
 
 variable "encrypted" {
   type        = bool
+  default     = true
   description = "If true, the file system will be encrypted"
-  default     = false
+
 }
 
 variable "performance_mode" {
   type        = string
-  description = "The file system performance mode. Can be either `generalPurpose` or `maxIO`"
   default     = "generalPurpose"
+  description = "The file system performance mode. Can be either `generalPurpose` or `maxIO`"
+
 }
 
 variable "provisioned_throughput_in_mibps" {
@@ -120,20 +123,21 @@ variable "provisioned_throughput_in_mibps" {
 
 variable "throughput_mode" {
   type        = string
-  description = "Throughput mode for the file system. Defaults to bursting. Valid values: `bursting`, `provisioned`. When using `provisioned`, also set `provisioned_throughput_in_mibps`"
   default     = "bursting"
+  description = "Throughput mode for the file system. Defaults to bursting. Valid values: `bursting`, `provisioned`. When using `provisioned`, also set `provisioned_throughput_in_mibps`"
+
 }
 
 variable "mount_target_ip_address" {
   type        = string
-  description = "The address (within the address range of the specified subnet) at which the file system may be mounted via the mount target"
   default     = ""
   sensitive   = true
+  description = "The address (within the address range of the specified subnet) at which the file system may be mounted via the mount target"
 }
 
 variable "kms_key_id" {
   type        = string
-  description = "The ARN for the KMS encryption key. When specifying kms_key_id, encrypted needs to be set to true."
   default     = ""
   sensitive   = true
+  description = "The ARN for the KMS encryption key. When specifying kms_key_id, encrypted needs to be set to true."
 }
