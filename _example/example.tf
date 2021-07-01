@@ -4,19 +4,20 @@ provider "aws" {
 
 module "vpc" {
   source  = "clouddrove/vpc/aws"
-  version = "0.14.0"
+  version = "0.15.0"
 
-  name       = "vpc"
-  cidr_block = "172.16.0.0/16"
+  name        = "vpc"
+  environment = "test"
+  label_order = ["name", "environment"]
+  cidr_block  = "172.16.0.0/16"
 }
 
 module "subnets" {
   source  = "clouddrove/subnet/aws"
-  version = "0.14.0"
+  version = "0.15.0"
 
   name               = "subnet"
   availability_zones = ["us-east-1a", "us-east-1b"]
-  repository         = "https://registry.terraform.io/modules/clouddrove/subnet/aws/0.14.0"
   vpc_id             = module.vpc.vpc_id
   cidr_block         = module.vpc.vpc_cidr_block
   type               = "public"
