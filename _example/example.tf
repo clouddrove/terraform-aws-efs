@@ -9,7 +9,7 @@ module "vpc" {
   name        = "vpc"
   environment = "test"
   label_order = ["name", "environment"]
-  cidr_block = "172.16.0.0/16"
+  cidr_block  = "172.16.0.0/16"
 }
 
 module "subnets" {
