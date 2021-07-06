@@ -39,3 +39,9 @@ output "efs_network_interface_ids" {
   value       = module.efs.network_interface_ids
   description = "List of mount target network interface IDs"
 }
+
+output "tags" {
+  value       = module.efs.tags
+  description = "The tags of the ecs cluster"
+
+}
