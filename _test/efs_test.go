@@ -1,34 +1,32 @@
 // Managed By : CloudDrove
-// Description : This Terratest is used to test the Terraform EFS module.
+// Description : This Terratest is used to test the Terraform VPN module.
 // Copyright @ CloudDrove. All Right Reserved.
-
 package test
 
 import (
 	"testing"
-	//"strings"
-	"github.com/stretchr/testify/assert"
 	"github.com/gruntwork-io/terratest/modules/terraform"
+	"github.com/stretchr/testify/assert"
 )
 
-func TestEFS(t *testing.T) {
+func Test(t *testing.T) {
 	t.Parallel()
 
 	terraformOptions := &terraform.Options{
 		// Source path of Terraform directory.
 		TerraformDir: "../_example",
-		Upgrade:      true,
 	}
 
-	// This will run `terraform init` and `terraform apply` and fail the test if there are any errors
+	// This will run 'terraform init' and 'terraform application' and will fail the test if any errors occur
 	terraform.InitAndApply(t, terraformOptions)
 
-	// At the end of the test, run `terraform destroy` to clean up any resources that were created
+	// To clean up any resources that have been created, run 'terraform destroy' towards the end of the test
 	defer terraform.Destroy(t, terraformOptions)
 
-	// Run `terraform output` to get the value of an output variable
-	keyArn := terraform.Output(t, terraformOptions, "efs_arn")
+	// To get the value of an output variable, run 'terraform output'
+	Tags := terraform.OutputMap(t, terraformOptions, "tags")
 
-	// Verify we're getting back the outputs we expect
-	assert.Contains(t, keyArn, "arn:aws:elasticfilesystem")
+	// Check that we get back the outputs that we expect
+	assert.Equal(t, "efs-test", Tags["Name"])
+
 }
