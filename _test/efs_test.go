@@ -1,5 +1,5 @@
 // Managed By : CloudDrove
-// Description : This Terratest is used to test the Terraform VPN module.
+// Description : This Terratest is used to test the Terraform EFS modules.
 // Copyright @ CloudDrove. All Right Reserved.
 package test
 
