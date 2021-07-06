@@ -25,3 +25,9 @@ output "network_interface_ids" {
   value       = [coalescelist(aws_efs_mount_target.default.*.network_interface_id, [""])]
   description = "List of mount target network interface IDs"
 }
+
+output "tags" {
+  value       = module.label.tags
+  description = "The tags of the ecs cluster"
+
+}

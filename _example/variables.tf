@@ -4,7 +4,7 @@ variable "region" {
 
 variable "repository" {
   type        = string
-  default     = "https://registry.terraform.io/modules/clouddrove/subnet/aws/0.14.0"
+  default     = "https://github.com/clouddrove/terraform-aws-efs"
   description = "Terraform current module repo"
 
   validation {
