@@ -16,7 +16,7 @@ jobs:
         id: minMax
         uses: clowdhaus/terraform-min-max@main
     outputs:
-      minVersion: 1.1.16
+      minVersion: ${{ steps.minMax.outputs.minVersion }}
       maxVersion: ${{ steps.minMax.outputs.maxVersion }}
 
 
@@ -28,7 +28,7 @@ jobs:
       fail-fast: false
       matrix:
         version:
-          - ${{ needs.versionExtract.outputs.minVersion }}
+          - 1.1.16
           - ${{ needs.versionExtract.outputs.maxVersion }}
         directory:
           - _example/
