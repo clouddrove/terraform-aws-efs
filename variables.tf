@@ -130,7 +130,7 @@ variable "throughput_mode" {
 
 variable "mount_target_ip_address" {
   type        = string
-  default     = ""
+  default     = null
   sensitive   = true
   description = "The address (within the address range of the specified subnet) at which the file system may be mounted via the mount target"
 }
@@ -140,4 +140,10 @@ variable "kms_key_id" {
   default     = ""
   sensitive   = true
   description = "The ARN for the KMS encryption key. When specifying kms_key_id, encrypted needs to be set to true."
+}
+
+variable "efs_backup_policy_enabled" {
+  type        = bool
+  default     = true
+  description = "If `true`, it will turn on automatic backups."
 }
