@@ -56,6 +56,7 @@ resource "aws_security_group" "default" {
     from_port       = "2049" # NFS
     to_port         = "2049"
     protocol        = "tcp"
+    description     = format("for %s", var.security_groups)
     security_groups = var.security_groups
   }
 
@@ -63,7 +64,8 @@ resource "aws_security_group" "default" {
     from_port   = 0
     to_port     = 0
     protocol    = "-1"
-    cidr_blocks = ["0.0.0.0/0"]
+    description = "for all"
+    cidr_blocks = ["0.0.0.0/0"] #tfsec:ignore:aws-vpc-no-public-ingress-sgr
   }
 
   tags = module.label.tags
