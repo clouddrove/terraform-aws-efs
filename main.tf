@@ -42,6 +42,7 @@ resource "aws_efs_mount_target" "default" {
 
 #Module      : SECURITY GROUP
 #Description : Provides a security group resource.
+#tfsec:ignore:aws-vpc-no-public-ingress-sgr
 resource "aws_security_group" "default" {
   count       = var.efs_enabled ? 1 : 0
   name        = module.label.id
@@ -65,7 +66,8 @@ resource "aws_security_group" "default" {
     to_port     = 0
     protocol    = "-1"
     description = "for all"
-    cidr_blocks = ["0.0.0.0/0"] #tfsec:ignore:aws-vpc-no-public-ingress-sgr
+    #tfsec:ignore:aws-vpc-no-public-ingress-sgr
+    cidr_blocks = ["0.0.0.0/0"] #tfsec:ignore:aws-vpc-no-public-egress-sgr
   }
 
   tags = module.label.tags
