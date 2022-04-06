@@ -56,6 +56,7 @@ resource "aws_security_group" "default" {
     from_port       = "2049" # NFS
     to_port         = "2049"
     protocol        = "tcp"
+    description     = format("for %s", var.security_groups)
     security_groups = var.security_groups
   }
 
@@ -63,8 +64,26 @@ resource "aws_security_group" "default" {
     from_port   = 0
     to_port     = 0
     protocol    = "-1"
-    cidr_blocks = ["0.0.0.0/0"]
+    description = "for all"
+    cidr_blocks = ["0.0.0.0/0"] #tfsec:ignore:aws-vpc-no-public-egress-sgr
   }
 
   tags = module.label.tags
+}
+
+resource "aws_efs_backup_policy" "policy" {
+  count = var.efs_enabled ? 1 : 0
+
+  file_system_id = join("", aws_efs_file_system.default.*.id)
+
+  backup_policy {
+    status = var.efs_backup_policy_enabled ? "ENABLED" : "DISABLED"
+  }
+}
+resource "aws_efs_access_point" "default" {
+  count          = var.efs_enabled ? 1 : 0
+  file_system_id = join("", aws_efs_file_system.default.*.id)
+
+  tags = module.label.tags
+
 }

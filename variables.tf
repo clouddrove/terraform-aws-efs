@@ -8,12 +8,6 @@ variable "repository" {
   type        = string
   default     = "https://github.com/clouddrove/terraform-aws-efs"
   description = "Terraform current module repo"
-
-  validation {
-    # regex(...) fails if it cannot find a match
-    condition     = can(regex("^https://", var.repository))
-    error_message = "The module-repo value must be a valid Git repo link."
-  }
 }
 
 variable "environment" {
@@ -130,7 +124,7 @@ variable "throughput_mode" {
 
 variable "mount_target_ip_address" {
   type        = string
-  default     = ""
+  default     = null
   sensitive   = true
   description = "The address (within the address range of the specified subnet) at which the file system may be mounted via the mount target"
 }
@@ -140,4 +134,10 @@ variable "kms_key_id" {
   default     = ""
   sensitive   = true
   description = "The ARN for the KMS encryption key. When specifying kms_key_id, encrypted needs to be set to true."
+}
+
+variable "efs_backup_policy_enabled" {
+  type        = bool
+  default     = true
+  description = "If `true`, it will turn on automatic backups."
 }

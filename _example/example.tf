@@ -35,10 +35,11 @@ module "efs" {
   environment = var.environment
   label_order = var.label_order
 
-  creation_token     = var.token
-  region             = var.region
-  availability_zones = ["${var.region}b", "${var.region}c"]
-  vpc_id             = module.vpc.vpc_id
-  subnets            = module.subnets.public_subnet_id
-  security_groups    = [module.vpc.vpc_default_security_group_id]
+  creation_token            = var.token
+  region                    = var.region
+  availability_zones        = ["${var.region}b", "${var.region}c"]
+  vpc_id                    = module.vpc.vpc_id
+  subnets                   = module.subnets.public_subnet_id
+  security_groups           = [module.vpc.vpc_default_security_group_id]
+  efs_backup_policy_enabled = true
 }
