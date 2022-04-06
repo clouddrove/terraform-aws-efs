@@ -28,7 +28,7 @@ jobs:
       fail-fast: false
       matrix:
         version:
-          - 0.14.14
+          - 0.14.11
           - ${{ needs.versionExtract.outputs.maxVersion }}
         directory:
           - _example/
