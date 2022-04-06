@@ -42,7 +42,6 @@ resource "aws_efs_mount_target" "default" {
 
 #Module      : SECURITY GROUP
 #Description : Provides a security group resource.
-#tfsec:ignore:aws-vpc-no-public-ingress-sgr
 resource "aws_security_group" "default" {
   count       = var.efs_enabled ? 1 : 0
   name        = module.label.id
