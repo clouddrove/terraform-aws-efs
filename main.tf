@@ -67,7 +67,7 @@ resource "aws_security_group" "default" {
     protocol    = "-1"
     description = "for all"
     #tfsec:ignore:aws-vpc-no-public-ingress-sgr
-    cidr_blocks = ["0.0.0.0/0"] #tfsec:ignore:aws-vpc-no-public-egress-sgr
+    cidr_blocks = ["0.0.0.0/0"]
   }
 
   tags = module.label.tags
