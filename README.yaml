@@ -43,7 +43,7 @@ usage : |-
   ```hcl
       module "efs" {
         source                    = "clouddrove/efs/aws"
-        version                   = "0.15.0"
+        version                   = "1.0.1"
         name                      = "efs"
         creation_token            = var.token
         region                    = var.region

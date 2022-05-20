@@ -56,7 +56,6 @@ resource "aws_security_group" "default" {
     from_port       = "2049" # NFS
     to_port         = "2049"
     protocol        = "tcp"
-    description     = format("for %s", var.security_groups)
     security_groups = var.security_groups
   }
 
