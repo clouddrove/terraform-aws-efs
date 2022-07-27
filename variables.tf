@@ -143,7 +143,7 @@ variable "efs_backup_policy_enabled" {
 }
 
 variable "allow_cidr" {
-  type = list(any)
-  default = []
+  type        = list(any)
+  default     = []
   description = "Provide allowed cidr to efs"
 }

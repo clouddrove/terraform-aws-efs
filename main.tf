@@ -58,12 +58,12 @@ resource "aws_security_group" "default" {
     protocol        = "tcp"
     security_groups = var.security_groups
   }
-  
+
   ingress {
-    from_port       = "2049" # NFS
-    to_port         = "2049"
-    protocol        = "tcp"
-    cidr_blocks     = var.allow_cidr #tfsec:ignore:aws-vpc-no-public-egress-sgr
+    from_port   = "2049" # NFS
+    to_port     = "2049"
+    protocol    = "tcp"
+    cidr_blocks = var.allow_cidr #tfsec:ignore:aws-vpc-no-public-egress-sgr
   }
 
   egress {
