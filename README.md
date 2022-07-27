@@ -100,6 +100,7 @@ Here is an example of how you can use this module in your inventory structure:
 
 | Name | Description | Type | Default | Required |
 |------|-------------|------|---------|:--------:|
+| allow\_cidr | Provide allowed cidr to efs | `list(any)` | `[]` | no |
 | attributes | If true, the file system will be encrypted | `list(string)` | `[]` | no |
 | availability\_zones | Availability Zone IDs | `list(string)` | n/a | yes |
 | creation\_token | A unique name (a maximum of 64 characters are allowed) used as reference when creating the EFS | `string` | n/a | yes |
