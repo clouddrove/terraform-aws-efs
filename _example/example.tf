@@ -42,4 +42,5 @@ module "efs" {
   subnets                   = module.subnets.public_subnet_id
   security_groups           = [module.vpc.vpc_default_security_group_id]
   efs_backup_policy_enabled = true
+  allow_cidr                = ["10.0.0.0/16"] #vpc_cidr
 }
