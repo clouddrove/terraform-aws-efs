@@ -141,3 +141,9 @@ variable "efs_backup_policy_enabled" {
   default     = true
   description = "If `true`, it will turn on automatic backups."
 }
+
+variable "allow_cidr" {
+  type        = list(any)
+  default     = []
+  description = "Provide allowed cidr to efs"
+}
