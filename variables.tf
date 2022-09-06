@@ -147,3 +147,8 @@ variable "allow_cidr" {
   default     = []
   description = "Provide allowed cidr to efs"
 }
+
+variable "access_point_enabled" {
+  type    = bool
+  default = true
+}
