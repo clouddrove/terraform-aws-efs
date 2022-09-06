@@ -100,6 +100,7 @@ Here is an example of how you can use this module in your inventory structure:
 
 | Name | Description | Type | Default | Required |
 |------|-------------|------|---------|:--------:|
+| access\_point\_enabled | n/a | `bool` | `true` | no |
 | allow\_cidr | Provide allowed cidr to efs | `list(any)` | `[]` | no |
 | attributes | If true, the file system will be encrypted | `list(string)` | `[]` | no |
 | availability\_zones | Availability Zone IDs | `list(string)` | n/a | yes |
