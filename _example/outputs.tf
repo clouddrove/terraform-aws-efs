@@ -1,17 +1,21 @@
 output "vpc_id" {
-  value = module.vpc.vpc_id
+  value       = module.vpc.vpc_id
+  description = "The VPC ID."
 }
 
 output "public_subnet_cidrs" {
-  value = module.subnets.public_subnet_cidrs
+  value       = module.subnets.public_subnet_cidrs
+  description = "The CIDR of the subnet."
 }
 
 output "private_subnet_cidrs" {
-  value = module.subnets.private_subnet_cidrs
+  value       = module.subnets.private_subnet_cidrs
+  description = "The CIDR of the subnet."
 }
 
 output "vpc_cidr" {
-  value = module.vpc.vpc_cidr_block
+  value       = module.vpc.vpc_cidr_block
+  description = "The CIDR of the vpc."
 }
 
 output "efs_arn" {
