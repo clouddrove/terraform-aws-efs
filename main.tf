@@ -45,7 +45,7 @@ resource "aws_efs_mount_target" "default" {
 resource "aws_security_group" "default" {
   count       = var.efs_enabled ? 1 : 0
   name        = module.label.id
-  description = "EFS"
+  description = var.mount_target_description
   vpc_id      = var.vpc_id
 
   lifecycle {
