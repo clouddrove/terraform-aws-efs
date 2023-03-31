@@ -152,3 +152,8 @@ variable "access_point_enabled" {
   type    = bool
   default = true
 }
+
+variable "mount_target_description" {
+  type    = string
+  default = ""
+}
