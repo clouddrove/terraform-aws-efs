@@ -1,13 +1,9 @@
 #Module      : LABEL
 #Description : Terraform label module variables.
 variable "name" {
-  description = "Solution name, e.g. `app`"
-}
-
-variable "repository" {
   type        = string
-  default     = "https://github.com/clouddrove/terraform-aws-efs"
-  description = "Terraform current module repo"
+  default     = ""
+  description = "Solution name, e.g. `app`"
 }
 
 variable "environment" {
@@ -53,11 +49,6 @@ variable "vpc_id" {
   description = "VPC ID"
 }
 
-variable "region" {
-  type        = string
-  description = "AWS Region"
-}
-
 variable "subnets" {
   type        = list(string)
   sensitive   = true
@@ -68,32 +59,6 @@ variable "availability_zones" {
   type        = list(string)
   sensitive   = true
   description = "Availability Zone IDs"
-}
-
-variable "zone_id" {
-  type        = string
-  default     = ""
-  sensitive   = true
-  description = "Route53 DNS zone ID"
-}
-
-variable "delimiter" {
-  type        = string
-  default     = "-"
-  description = "Delimiter to be used between `namespace`, `stage`, `name` and `attributes`"
-
-}
-
-variable "attributes" {
-  type        = list(string)
-  default     = []
-  description = "If true, the file system will be encrypted"
-}
-
-variable "tags" {
-  type        = map(string)
-  default     = {}
-  description = "Additional tags (e.g. `{ BusinessUnit = \"XYZ\" }`"
 }
 
 variable "encrypted" {
@@ -111,6 +76,7 @@ variable "performance_mode" {
 }
 
 variable "provisioned_throughput_in_mibps" {
+  type        = string
   default     = 0
   description = "The throughput, measured in MiB/s, that you want to provision for the file system. Only applicable with `throughput_mode` set to provisioned"
 }
