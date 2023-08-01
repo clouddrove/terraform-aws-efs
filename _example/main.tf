@@ -4,7 +4,7 @@ provider "aws" {
 
 module "vpc" {
   source  = "clouddrove/vpc/aws"
-  version = "1.3.1"
+  version = "2.0.0"
 
   name        = "vpc"
   environment = "test"
@@ -14,7 +14,7 @@ module "vpc" {
 
 module "subnets" {
   source  = "clouddrove/subnet/aws"
-  version = "1.3.0"
+  version = "2.0.0"
 
   name               = "subnet"
   availability_zones = ["us-east-1a", "us-east-1b"]
@@ -31,13 +31,11 @@ module "efs" {
   source = "./.."
 
   name        = "efs"
-  repository  = var.repository
-  environment = var.environment
-  label_order = var.label_order
+  environment = "test"
+  label_order = ["name", "environment"]
 
-  creation_token            = var.token
-  region                    = var.region
-  availability_zones        = ["${var.region}b", "${var.region}c"]
+  creation_token            = "changeme"
+  availability_zones        = ["us-east-1b", "us-east-1c"]
   vpc_id                    = module.vpc.vpc_id
   subnets                   = module.subnets.public_subnet_id
   security_groups           = [module.vpc.vpc_default_security_group_id]
