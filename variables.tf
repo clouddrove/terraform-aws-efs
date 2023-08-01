@@ -76,7 +76,7 @@ variable "performance_mode" {
 }
 
 variable "provisioned_throughput_in_mibps" {
-  type = string
+  type        = string
   default     = 0
   description = "The throughput, measured in MiB/s, that you want to provision for the file system. Only applicable with `throughput_mode` set to provisioned"
 }
