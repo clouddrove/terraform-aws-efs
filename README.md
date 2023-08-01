@@ -13,17 +13,14 @@
 
 <p align="center">
 
-<a href="https://www.terraform.io">
-  <img src="https://img.shields.io/badge/Terraform-v1.1.7-green" alt="Terraform">
-</a>
-<a href="LICENSE.md">
-  <img src="https://img.shields.io/badge/License-APACHE-blue.svg" alt="Licence">
+<a href="https://github.com/clouddrove/terraform-aws-efs/releases/latest">
+  <img src="https://img.shields.io/github/release/clouddrove/terraform-aws-efs.svg" alt="Latest Release">
 </a>
 <a href="https://github.com/clouddrove/terraform-aws-efs/actions/workflows/tfsec.yml">
   <img src="https://github.com/clouddrove/terraform-aws-efs/actions/workflows/tfsec.yml/badge.svg" alt="tfsec">
 </a>
-<a href="https://github.com/clouddrove/terraform-aws-efs/actions/workflows/terraform.yml">
-  <img src="https://github.com/clouddrove/terraform-aws-efs/actions/workflows/terraform.yml/badge.svg" alt="static-checks">
+<a href="LICENSE.md">
+  <img src="https://img.shields.io/badge/License-APACHE-blue.svg" alt="Licence">
 </a>
 
 
@@ -56,12 +53,6 @@ We have [*fifty plus terraform modules*][terraform_modules]. A few of them are c
 ## Prerequisites
 
 This module has a few dependencies: 
-
-- [Terraform 1.x.x](https://learn.hashicorp.com/terraform/getting-started/install.html)
-- [Go](https://golang.org/doc/install)
-- [github.com/stretchr/testify/assert](https://github.com/stretchr/testify)
-- [github.com/gruntwork-io/terratest/modules/terraform](https://github.com/gruntwork-io/terratest)
-
 
 
 
@@ -102,10 +93,8 @@ Here is an example of how you can use this module in your inventory structure:
 |------|-------------|------|---------|:--------:|
 | access\_point\_enabled | n/a | `bool` | `true` | no |
 | allow\_cidr | Provide allowed cidr to efs | `list(any)` | `[]` | no |
-| attributes | If true, the file system will be encrypted | `list(string)` | `[]` | no |
 | availability\_zones | Availability Zone IDs | `list(string)` | n/a | yes |
 | creation\_token | A unique name (a maximum of 64 characters are allowed) used as reference when creating the EFS | `string` | n/a | yes |
-| delimiter | Delimiter to be used between `namespace`, `stage`, `name` and `attributes` | `string` | `"-"` | no |
 | efs\_backup\_policy\_enabled | If `true`, it will turn on automatic backups. | `bool` | `true` | no |
 | efs\_enabled | Set to false to prevent the module from creating any resources | `bool` | `true` | no |
 | encrypted | If true, the file system will be encrypted | `bool` | `true` | no |
@@ -115,17 +104,13 @@ Here is an example of how you can use this module in your inventory structure:
 | managedby | ManagedBy, eg 'CloudDrove'. | `string` | `"hello@clouddrove.com"` | no |
 | mount\_target\_description | n/a | `string` | `""` | no |
 | mount\_target\_ip\_address | The address (within the address range of the specified subnet) at which the file system may be mounted via the mount target | `string` | `null` | no |
-| name | Solution name, e.g. `app` | `any` | n/a | yes |
+| name | Solution name, e.g. `app` | `string` | `""` | no |
 | performance\_mode | The file system performance mode. Can be either `generalPurpose` or `maxIO` | `string` | `"generalPurpose"` | no |
-| provisioned\_throughput\_in\_mibps | The throughput, measured in MiB/s, that you want to provision for the file system. Only applicable with `throughput_mode` set to provisioned | `number` | `0` | no |
-| region | AWS Region | `string` | n/a | yes |
-| repository | Terraform current module repo | `string` | `"https://github.com/clouddrove/terraform-aws-efs"` | no |
+| provisioned\_throughput\_in\_mibps | The throughput, measured in MiB/s, that you want to provision for the file system. Only applicable with `throughput_mode` set to provisioned | `string` | `0` | no |
 | security\_groups | Security group IDs to allow access to the EFS | `list(string)` | n/a | yes |
 | subnets | Subnet IDs | `list(string)` | n/a | yes |
-| tags | Additional tags (e.g. `{ BusinessUnit = "XYZ" }` | `map(string)` | `{}` | no |
 | throughput\_mode | Throughput mode for the file system. Defaults to bursting. Valid values: `bursting`, `provisioned`. When using `provisioned`, also set `provisioned_throughput_in_mibps` | `string` | `"bursting"` | no |
 | vpc\_id | VPC ID | `string` | n/a | yes |
-| zone\_id | Route53 DNS zone ID | `string` | `""` | no |
 
 ## Outputs
 
