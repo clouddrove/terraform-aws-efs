@@ -25,14 +25,11 @@ module "subnets" {
   ipv6_cidr_block    = module.vpc.ipv6_cidr_block
 }
 
-
-
 module "efs" {
   source = "./.."
 
   name        = "efs"
   environment = "test"
-  label_order = ["name", "environment"]
 
   creation_token            = "changeme"
   availability_zones        = ["us-east-1b", "us-east-1c"]
