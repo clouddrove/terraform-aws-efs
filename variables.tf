@@ -121,5 +121,5 @@ variable "access_point_enabled" {
 
 variable "mount_target_description" {
   type    = string
-  default = ""
+  default = "this is mount target security group "
 }
