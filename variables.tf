@@ -37,6 +37,11 @@ variable "efs_enabled" {
   default     = true
   description = "Set to false to prevent the module from creating any resources"
 }
+variable "replication_enabled" {
+  type        = bool
+  default     = true
+  description = "Set to false to prevent the module from creating any resources"
+}
 
 variable "creation_token" {
   type        = string
@@ -58,6 +63,12 @@ variable "subnets" {
 variable "availability_zones" {
   type        = list(string)
   sensitive   = true
+  description = "Availability Zone IDs"
+}
+
+variable "availability_zone" {
+  type        = list(string)
+  default     = ["us-east-1b", "us-east-1c"]
   description = "Availability Zone IDs"
 }
 
@@ -122,4 +133,40 @@ variable "access_point_enabled" {
 variable "mount_target_description" {
   type    = string
   default = "this is mount target security group "
+}
+
+variable "bypass_policy_lockout_safety_check" {
+  description = "A flag to indicate whether to bypass the `aws_efs_file_system_policy` lockout safety check. Defaults to `false`"
+  type        = bool
+  default     = null
+}
+
+variable "replication_configuration_destination" {
+  description = "A destination configuration block"
+  type        = any
+  default     = {}
+}
+
+variable "source_policy_documents" {
+  description = "List of IAM policy documents that are merged together into the exported document. Statements must have unique `sid`s"
+  type        = list(string)
+  default     = []
+}
+
+variable "override_policy_documents" {
+  description = "List of IAM policy documents that are merged together into the exported document. In merging, statements with non-blank `sid`s will override statements with the same `sid`"
+  type        = list(string)
+  default     = []
+}
+
+variable "policy_statements" {
+  description = "A list of IAM policy [statements](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/data-sources/iam_policy_document#statement) for custom permission usage"
+  type        = any
+  default     = []
+}
+
+variable "deny_nonsecure_transport" {
+  description = "Determines whether `aws:SecureTransport` is required when connecting to elastic file system"
+  type        = bool
+  default     = true
 }

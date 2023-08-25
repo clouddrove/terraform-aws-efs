@@ -42,12 +42,15 @@ usage : |-
         source                    = "clouddrove/efs/aws"
         version                   = "1.3.0"
         name                      = "efs"
-        creation_token            = var.token
-        region                    = var.region
-        availability_zones        = ["${var.region}b", "${var.region}c"]
+        creation_token            = "changeme"
+        availability_zones        = local.availability_zones
         vpc_id                    = module.vpc.vpc_id
-        subnets                   = module.subnets.private_subnet_id
+        subnets                   = module.subnets.public_subnet_id
         security_groups           = [module.vpc.vpc_default_security_group_id]
         efs_backup_policy_enabled = true
-      }
+        allow_cidr                = ["10.0.0.0/16"] #vpc_cidr
+        replication_configuration_destination = {
+          region                 = "eu-west-2"
+          availability_zone_name = ["eu-west-2a", "eu-west-2b"]
+        }
   ```
