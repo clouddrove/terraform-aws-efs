@@ -57,25 +57,25 @@ resource "aws_security_group" "default" {
   }
 
   ingress {
-    from_port       = "2049" # NFS
-    to_port         = "2049"
-    protocol        = "tcp"
+    from_port       = var.from_port # NFS
+    to_port         = var.to_port
+    protocol        = var.protocol
     security_groups = var.security_groups
   }
 
   ingress {
-    from_port   = "2049" # NFS
-    to_port     = "2049"
-    protocol    = "tcp"
+    from_port       = var.from_port # NFS
+    to_port         = var.to_port
+    protocol        = var.protocol
     cidr_blocks = var.allow_cidr #tfsec:ignore:aws-vpc-no-public-egress-sgr
   }
 
   egress {
-    from_port   = 0
-    to_port     = 0
-    protocol    = "-1"
+    from_port   = var.egress_from_port
+    to_port     = var.egress_to_port
+    protocol    = var.egress_protocol
     description = "for all"
-    cidr_blocks = ["0.0.0.0/0"] #tfsec:ignore:aws-vpc-no-public-egress-sgr
+    cidr_blocks = var.egress_cidr_blocks #tfsec:ignore:aws-vpc-no-public-egress-sgr
   }
 
   tags = module.label.tags

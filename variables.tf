@@ -31,6 +31,46 @@ variable "security_groups" {
   sensitive   = true
   description = "Security group IDs to allow access to the EFS"
 }
+variable "from_port" {
+  type        = number
+  default   = 2049
+  description = "Security group IDs to allow access to the EFS"
+}
+
+variable "to_port" {
+  type        = number
+  default   = 2049
+  description = "Security group IDs to allow access to the EFS"
+}
+
+variable "egress_from_port" {
+  type        = number
+  default   = 0
+  description = "Security group IDs to allow access to the EFS"
+}
+variable "egress_to_port" {
+  type        = number
+  default   = 0
+  description = "Security group IDs to allow access to the EFS"
+}
+
+variable "protocol" {
+  type        = string
+  default   = "tcp"
+  description = "Security group IDs to allow access to the EFS"
+}
+
+variable "egress_protocol" {
+  type        = number
+  default   = -1
+  description = "Security group IDs to allow access to the EFS"
+}
+
+variable "egress_cidr_blocks" {
+  type        = list(string)
+  default   = ["0.0.0.0/0"]
+  description = "Security group IDs to allow access to the EFS"
+}
 
 variable "efs_enabled" {
   type        = bool
