@@ -33,42 +33,42 @@ variable "security_groups" {
 }
 variable "from_port" {
   type        = number
-  default   = 2049
+  default     = 2049
   description = "Security group IDs to allow access to the EFS"
 }
 
 variable "to_port" {
   type        = number
-  default   = 2049
+  default     = 2049
   description = "Security group IDs to allow access to the EFS"
 }
 
 variable "egress_from_port" {
   type        = number
-  default   = 0
+  default     = 0
   description = "Security group IDs to allow access to the EFS"
 }
 variable "egress_to_port" {
   type        = number
-  default   = 0
+  default     = 0
   description = "Security group IDs to allow access to the EFS"
 }
 
 variable "protocol" {
   type        = string
-  default   = "tcp"
+  default     = "tcp"
   description = "Security group IDs to allow access to the EFS"
 }
 
 variable "egress_protocol" {
   type        = number
-  default   = -1
+  default     = -1
   description = "Security group IDs to allow access to the EFS"
 }
 
 variable "egress_cidr_blocks" {
   type        = list(string)
-  default   = ["0.0.0.0/0"]
+  default     = ["0.0.0.0/0"]
   description = "Security group IDs to allow access to the EFS"
 }
 
@@ -181,6 +181,12 @@ variable "bypass_policy_lockout_safety_check" {
   default     = null
 }
 
+variable "aws_efs_file_system_policy" {
+  description = "A flag to enable or disable aws efs file system policy . Defaults to `false`"
+  type        = bool
+  default     = false
+}
+
 variable "replication_configuration_destination" {
   description = "A destination configuration block"
   type        = any
@@ -208,5 +214,5 @@ variable "policy_statements" {
 variable "deny_nonsecure_transport" {
   description = "Determines whether `aws:SecureTransport` is required when connecting to elastic file system"
   type        = bool
-  default     = true
+  default     = false
 }

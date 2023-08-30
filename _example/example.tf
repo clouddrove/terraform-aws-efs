@@ -44,7 +44,7 @@ module "efs" {
   subnets                   = module.subnets.public_subnet_id
   security_groups           = [module.vpc.vpc_default_security_group_id]
   efs_backup_policy_enabled = true
-  allow_cidr                = ["10.0.0.0/16"] #vpc_cidr
+  allow_cidr                = [module.vpc.vpc_cidr_block] #vpc_cidr
   replication_enabled       = true
   replication_configuration_destination = {
     region                 = "eu-west-2"

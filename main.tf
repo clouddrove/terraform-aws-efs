@@ -127,7 +127,7 @@ resource "aws_efs_replication_configuration" "this" {
 }
 
 resource "aws_efs_file_system_policy" "this" {
-  count = var.efs_enabled ? 1 : 0
+  count = var.efs_enabled && var.aws_efs_file_system_policy? 1 : 0
 
   file_system_id                     = aws_efs_file_system.default[0].id
   bypass_policy_lockout_safety_check = var.bypass_policy_lockout_safety_check
