@@ -2,8 +2,9 @@
 # Description : This Script is used to create security group.
 # Copyright @ CloudDrove. All Right Reserved.
 
-#Module      : Label
-#Description : Terraform module to create consistent naming for multiple names.
+##------------------------------------------------------------------------------
+## Description : Terraform module to create consistent naming for multiple names.
+##------------------------------------------------------------------------------
 
 module "label" {
   source  = "clouddrove/labels/aws"
@@ -16,8 +17,9 @@ module "label" {
   enabled     = var.efs_enabled
 }
 
-#Module      : EFS
-#Description : Provides a efs resource.
+##------------------------------------------------------------------------------
+## Description :Provides an Elastic File System (EFS) File System resource.
+##------------------------------------------------------------------------------
 resource "aws_efs_file_system" "default" {
   count                           = var.efs_enabled ? 1 : 0
   creation_token                  = var.creation_token
@@ -29,8 +31,9 @@ resource "aws_efs_file_system" "default" {
   kms_key_id                      = var.kms_key_id
 }
 
-#Module      : EFS
-#Description : Provides a efs resource mount target.
+##------------------------------------------------------------------------------
+## Description : Provides an Elastic File System (EFS) mount target.
+##------------------------------------------------------------------------------
 resource "aws_efs_mount_target" "default" {
   count           = var.efs_enabled && length(var.availability_zones) > 0 ? length(var.availability_zones) : 0
   file_system_id  = join("", aws_efs_file_system.default[*].id)
@@ -39,8 +42,10 @@ resource "aws_efs_mount_target" "default" {
   security_groups = [join("", aws_security_group.default[*].id)]
 }
 
-#Module      : SECURITY GROUP
-#Description : Provides a security group resource.
+##------------------------------------------------------------------------------
+## Description : Provides a security group resource.
+##------------------------------------------------------------------------------
+#tfsec:ignore:aws-ec2-add-description-to-security-group-rule
 resource "aws_security_group" "default" {
   count       = var.efs_enabled ? 1 : 0
   name        = module.label.id
@@ -52,30 +57,33 @@ resource "aws_security_group" "default" {
   }
 
   ingress {
-    from_port       = "2049" # NFS
-    to_port         = "2049"
-    protocol        = "tcp"
+    from_port       = var.from_port # NFS
+    to_port         = var.to_port
+    protocol        = var.protocol
     security_groups = var.security_groups
   }
 
   ingress {
-    from_port   = "2049" # NFS
-    to_port     = "2049"
-    protocol    = "tcp"
+    from_port   = var.from_port # NFS
+    to_port     = var.to_port
+    protocol    = var.protocol
     cidr_blocks = var.allow_cidr #tfsec:ignore:aws-vpc-no-public-egress-sgr
   }
 
   egress {
-    from_port   = 0
-    to_port     = 0
-    protocol    = "-1"
+    from_port   = var.egress_from_port
+    to_port     = var.egress_to_port
+    protocol    = var.egress_protocol
     description = "for all"
-    cidr_blocks = ["0.0.0.0/0"] #tfsec:ignore:aws-vpc-no-public-egress-sgr
+    cidr_blocks = var.egress_cidr_blocks #tfsec:ignore:aws-vpc-no-public-egress-sgr
   }
 
   tags = module.label.tags
 }
 
+##------------------------------------------------------------------------------
+## Description : Provides a security group resource.
+##------------------------------------------------------------------------------
 resource "aws_efs_backup_policy" "policy" {
   count = var.efs_enabled && var.efs_backup_policy_enabled == "ENABLED" ? 1 : 0
 
@@ -85,10 +93,111 @@ resource "aws_efs_backup_policy" "policy" {
     status = var.efs_backup_policy_enabled ? "ENABLED" : "DISABLED"
   }
 }
+
+##------------------------------------------------------------------------------
+## Description : Provides an Elastic File System (EFS) access point.
+##------------------------------------------------------------------------------
 resource "aws_efs_access_point" "default" {
   count          = var.efs_enabled && var.access_point_enabled ? 1 : 0
   file_system_id = join("", aws_efs_file_system.default[*].id)
 
   tags = module.label.tags
+}
 
+##------------------------------------------------------------------------------
+## Replication Configuration
+##------------------------------------------------------------------------------
+
+resource "aws_efs_replication_configuration" "this" {
+  count = var.efs_enabled && var.replication_enabled ? 1 : 0
+
+  source_file_system_id = aws_efs_file_system.default[0].id
+
+  dynamic "destination" {
+    for_each = [var.replication_configuration_destination]
+
+    content {
+      availability_zone_name = try(destination.value.availability_zones, null)
+      kms_key_id             = try(destination.value.kms_key_id, null)
+      region                 = try(destination.value.region, null)
+    }
+  }
+}
+
+resource "aws_efs_file_system_policy" "this" {
+  count = var.efs_enabled && var.aws_efs_file_system_policy ? 1 : 0
+
+  file_system_id                     = aws_efs_file_system.default[0].id
+  bypass_policy_lockout_safety_check = var.bypass_policy_lockout_safety_check
+  policy                             = data.aws_iam_policy_document.policy[0].json
+}
+
+data "aws_iam_policy_document" "policy" {
+  count = var.efs_enabled ? 1 : 0
+
+  source_policy_documents   = var.source_policy_documents
+  override_policy_documents = var.override_policy_documents
+
+  dynamic "statement" {
+    for_each = var.policy_statements
+
+    content {
+      sid           = try(statement.value.sid, null)
+      actions       = try(statement.value.actions, null)
+      not_actions   = try(statement.value.not_actions, null)
+      effect        = try(statement.value.effect, null)
+      resources     = try(statement.value.resources, [aws_efs_file_system.default[0].arn], null)
+      not_resources = try(statement.value.not_resources, null)
+
+      dynamic "principals" {
+        for_each = try(statement.value.principals, [])
+
+        content {
+          type        = principals.value.type
+          identifiers = principals.value.identifiers
+        }
+      }
+
+      dynamic "not_principals" {
+        for_each = try(statement.value.not_principals, [])
+
+        content {
+          type        = not_principals.value.type
+          identifiers = not_principals.value.identifiers
+        }
+      }
+
+      dynamic "condition" {
+        for_each = try(statement.value.conditions, statement.value.condition, [])
+
+        content {
+          test     = condition.value.test
+          values   = condition.value.values
+          variable = condition.value.variable
+        }
+      }
+    }
+  }
+
+  dynamic "statement" {
+    for_each = var.deny_nonsecure_transport ? [1] : []
+
+    content {
+      sid       = "NonSecureTransport"
+      effect    = "Deny"
+      actions   = ["*"]
+      resources = [aws_efs_file_system.default[0].arn]
+
+      principals {
+        type        = "AWS"
+        identifiers = ["*"]
+      }
+
+      condition {
+        test     = "Bool"
+        variable = "aws:SecureTransport"
+        values   = ["false"]
+      }
+    }
+  }
 }

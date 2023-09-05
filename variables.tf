@@ -31,8 +31,53 @@ variable "security_groups" {
   sensitive   = true
   description = "Security group IDs to allow access to the EFS"
 }
+variable "from_port" {
+  type        = number
+  default     = 2049
+  description = "Security group IDs to allow access to the EFS"
+}
+
+variable "to_port" {
+  type        = number
+  default     = 2049
+  description = "Security group IDs to allow access to the EFS"
+}
+
+variable "egress_from_port" {
+  type        = number
+  default     = 0
+  description = "Security group IDs to allow access to the EFS"
+}
+variable "egress_to_port" {
+  type        = number
+  default     = 0
+  description = "Security group IDs to allow access to the EFS"
+}
+
+variable "protocol" {
+  type        = string
+  default     = "tcp"
+  description = "Security group IDs to allow access to the EFS"
+}
+
+variable "egress_protocol" {
+  type        = number
+  default     = -1
+  description = "Security group IDs to allow access to the EFS"
+}
+
+variable "egress_cidr_blocks" {
+  type        = list(string)
+  default     = ["0.0.0.0/0"]
+  description = "Security group IDs to allow access to the EFS"
+}
 
 variable "efs_enabled" {
+  type        = bool
+  default     = true
+  description = "Set to false to prevent the module from creating any resources"
+}
+variable "replication_enabled" {
   type        = bool
   default     = true
   description = "Set to false to prevent the module from creating any resources"
@@ -121,5 +166,47 @@ variable "access_point_enabled" {
 
 variable "mount_target_description" {
   type    = string
-  default = ""
+  default = "this is mount target security group "
+}
+
+variable "bypass_policy_lockout_safety_check" {
+  description = "A flag to indicate whether to bypass the `aws_efs_file_system_policy` lockout safety check. Defaults to `false`"
+  type        = bool
+  default     = null
+}
+
+variable "aws_efs_file_system_policy" {
+  description = "A flag to enable or disable aws efs file system policy . Defaults to `false`"
+  type        = bool
+  default     = false
+}
+
+variable "replication_configuration_destination" {
+  description = "A destination configuration block"
+  type        = any
+  default     = {}
+}
+
+variable "source_policy_documents" {
+  description = "List of IAM policy documents that are merged together into the exported document. Statements must have unique `sid`s"
+  type        = list(string)
+  default     = []
+}
+
+variable "override_policy_documents" {
+  description = "List of IAM policy documents that are merged together into the exported document. In merging, statements with non-blank `sid`s will override statements with the same `sid`"
+  type        = list(string)
+  default     = []
+}
+
+variable "policy_statements" {
+  description = "A list of IAM policy [statements](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/data-sources/iam_policy_document#statement) for custom permission usage"
+  type        = any
+  default     = []
+}
+
+variable "deny_nonsecure_transport" {
+  description = "Determines whether `aws:SecureTransport` is required when connecting to elastic file system"
+  type        = bool
+  default     = false
 }
