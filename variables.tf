@@ -106,12 +106,6 @@ variable "availability_zones" {
   description = "Availability Zone IDs"
 }
 
-variable "availability_zone" {
-  type        = list(string)
-  default     = ["us-east-1b", "us-east-1c"]
-  description = "Availability Zone IDs"
-}
-
 variable "encrypted" {
   type        = bool
   default     = true

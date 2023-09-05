@@ -9,9 +9,8 @@ locals {
 }
 
 module "vpc" {
-  source  = "clouddrove/vpc/aws"
-  version = "2.0.0"
-
+  source      = "clouddrove/vpc/aws"
+  version     = "2.0.0"
   name        = "vpc"
   environment = local.environment
   label_order = local.label_order
@@ -19,9 +18,8 @@ module "vpc" {
 }
 
 module "subnets" {
-  source  = "clouddrove/subnet/aws"
-  version = "2.0.0"
-
+  source             = "clouddrove/subnet/aws"
+  version            = "2.0.0"
   name               = "subnet"
   environment        = local.environment
   label_order        = local.label_order
@@ -34,8 +32,7 @@ module "subnets" {
 }
 
 module "efs" {
-  source = "./.."
-
+  source                    = "./.."
   name                      = "efs"
   environment               = "test"
   creation_token            = "changeme"
