@@ -4,6 +4,17 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [2.0.0] - 2023-10-16
+### :sparkles: New Features
+- [`23f9041`](https://github.com/clouddrove/terraform-aws-efs/commit/23f904114538d52e019e83bc8160c34406de0a8b) - add deepsource & added assignees,reviewer in dependabot" *(commit by [@Tanveer143s](https://github.com/Tanveer143s))*
+
+### :bug: Bug Fixes
+- [`94c2165`](https://github.com/clouddrove/terraform-aws-efs/commit/94c2165277fcab524e5a3cfdfa27294215a5723e) - updated vpc tag *(commit by [@mamrajyadav](https://github.com/mamrajyadav))*
+- [`27f7786`](https://github.com/clouddrove/terraform-aws-efs/commit/27f778603e8c147c2537f62886d2eee97687f0c9) - variable added to enable or disable policy *(commit by [@anmolnagpal](https://github.com/anmolnagpal))*
+- [`f24457d`](https://github.com/clouddrove/terraform-aws-efs/commit/f24457deca974995f1116d205eef1e6543db5869) - Fixed tfcheks and tflint *(commit by [@13archit](https://github.com/13archit))*
+- [`20e708e`](https://github.com/clouddrove/terraform-aws-efs/commit/20e708e7a025dd5073beddcbe09ea129bdc4fcec) - Fixed defsec warnings *(commit by [@13archit](https://github.com/13archit))*
+
+
 ## [1.3.1] - 2023-03-31
 ### :bug: Bug Fixes
 - [`0c61373`](https://github.com/clouddrove/terraform-aws-efs/commit/0c61373aaa44827c39c7132601f268ea9394fbf5) - changed efs module for efs-sg hard code description
@@ -60,3 +71,4 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 [1.0.3]: https://github.com/clouddrove/terraform-aws-efs/compare/1.0.3...master
 [1.3.0]: https://github.com/clouddrove/terraform-aws-efs/compare/1.3.0...master
 [1.3.1]: https://github.com/clouddrove/terraform-aws-efs/compare/1.3.1...master
+[2.0.0]: https://github.com/clouddrove/terraform-aws-efs/compare/1.3.1...2.0.0
