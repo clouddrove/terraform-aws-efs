@@ -85,7 +85,7 @@ resource "aws_security_group" "default" {
 ## Description : Provides a security group resource.
 ##------------------------------------------------------------------------------
 resource "aws_efs_backup_policy" "policy" {
-  count = var.efs_enabled && var.efs_backup_policy_enabled == "ENABLED" ? 1 : 0
+  count = var.efs_enabled && var.efs_backup_policy_enabled ? 1 : 0
 
   file_system_id = join("", aws_efs_file_system.default[*].id)
 
@@ -125,16 +125,14 @@ resource "aws_efs_replication_configuration" "this" {
 }
 
 resource "aws_efs_file_system_policy" "this" {
-  count = var.efs_enabled && var.aws_efs_file_system_policy ? 1 : 0
-
+  count                              = var.efs_enabled && var.enable_aws_efs_file_system_policy ? 1 : 0
   file_system_id                     = aws_efs_file_system.default[0].id
   bypass_policy_lockout_safety_check = var.bypass_policy_lockout_safety_check
   policy                             = data.aws_iam_policy_document.policy[0].json
 }
 
 data "aws_iam_policy_document" "policy" {
-  count = var.efs_enabled ? 1 : 0
-
+  count                     = var.efs_enabled && var.enable_aws_efs_file_system_policy ? 1 : 0
   source_policy_documents   = var.source_policy_documents
   override_policy_documents = var.override_policy_documents
 

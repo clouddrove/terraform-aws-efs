@@ -172,10 +172,10 @@ variable "mount_target_description" {
 variable "bypass_policy_lockout_safety_check" {
   description = "A flag to indicate whether to bypass the `aws_efs_file_system_policy` lockout safety check. Defaults to `false`"
   type        = bool
-  default     = null
+  default     = false
 }
 
-variable "aws_efs_file_system_policy" {
+variable "enable_aws_efs_file_system_policy" {
   description = "A flag to enable or disable aws efs file system policy . Defaults to `false`"
   type        = bool
   default     = false
