@@ -22,7 +22,7 @@ jobs:
           sleep 150
       - name: Get Status of current ref
         id: get-status
-        uses: danieldeichfuss/get-status@v0
+        uses: danieldeichfuss/get-status@v0.0.10
         with:
           ref: ${{ github.sha }}
 
