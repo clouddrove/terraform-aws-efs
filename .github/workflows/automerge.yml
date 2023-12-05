@@ -17,6 +17,9 @@ jobs:
     if: github.actor == 'dependabot[bot]'
     steps:
 
+      - name: wait for other checks to complete
+        run: |
+          sleep 150
       - name: Get Status of current ref
         id: get-status
         uses: danieldeichfuss/get-status@v0
