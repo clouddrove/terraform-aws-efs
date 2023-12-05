@@ -14,15 +14,24 @@ jobs:
   autoapprove:
     name: Auto Approve a PR by dependabot 
     runs-on: ubuntu-latest
-    if: github.actor == 'dependabot[bot]' && success() && github.event_name == 'pull_request'
+    if: github.actor == 'dependabot[bot]'
     steps:
+
+      - name: Get Status of current ref
+        id: get-status
+        uses: danieldeichfuss/get-status@v0
+        with:
+          ref: ${{ github.sha }}
+
       - name: Approve a PR for Github Bot
+        if: ${{steps.get-status.outputs.all-checks-completed == 'true' &&  steps.get-status.outputs.all-checks-passed == 'true'}}      
         run: gh pr review --approve "$PR_URL"
         env:
           PR_URL: ${{github.event.pull_request.html_url}}
           GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
 
       - name: Approve a PR for Anmol nagpal
+        if: ${{steps.get-status.outputs.all-checks-completed == 'true' &&  steps.get-status.outputs.all-checks-passed == 'true'}}      
         run: gh pr review --approve "$PR_URL"
         env:
           PR_URL: ${{github.event.pull_request.html_url}}
