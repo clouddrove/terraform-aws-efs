@@ -21,7 +21,7 @@ module "vpc" {
 #tfsec:ignore:aws-ec2-no-public-ingress-acl # Ingnored because these are basic examples, it can be changed via varibales as per requirement. 
 module "subnets" {
   source             = "clouddrove/subnet/aws"
-  version            = "2.0.0"
+  version            = "2.0.1"
   name               = "subnet"
   environment        = local.environment
   label_order        = local.label_order
