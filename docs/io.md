@@ -48,4 +48,3 @@
 | mount\_target\_ips | List of EFS mount target IPs (one per Availability Zone) |
 | network\_interface\_ids | List of mount target network interface IDs |
 | tags | The tags of the ecs cluster |
-
