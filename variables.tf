@@ -28,9 +28,9 @@ variable "managedby" {
 # Description : Terraform EFS  module variables.
 variable "security_groups" {
   type        = list(string)
-  sensitive   = true
   description = "Security group IDs to allow access to the EFS"
 }
+
 variable "from_port" {
   type        = number
   default     = 2049
@@ -61,9 +61,9 @@ variable "protocol" {
 }
 
 variable "egress_protocol" {
-  type        = number
-  default     = -1
-  description = "Security group IDs to allow access to the EFS"
+  type        = string
+  default     = "-1"
+  description = "IP protocol for outbound traffic"
 }
 
 variable "egress_cidr_blocks" {
@@ -102,7 +102,6 @@ variable "subnets" {
 
 variable "availability_zones" {
   type        = list(string)
-  sensitive   = true
   description = "Availability Zone IDs"
 }
 
@@ -121,9 +120,9 @@ variable "performance_mode" {
 }
 
 variable "provisioned_throughput_in_mibps" {
-  type        = string
+  type        = number
   default     = 0
-  description = "The throughput, measured in MiB/s, that you want to provision for the file system. Only applicable with `throughput_mode` set to provisioned"
+  description = "Provisioned throughput in MiB/s. Only applicable when throughput_mode is provisioned."
 }
 
 variable "throughput_mode" {
