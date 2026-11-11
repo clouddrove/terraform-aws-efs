@@ -15,6 +15,11 @@
 | egress_protocol | IP protocol for the outbound security group rule. Use `-1` for all protocols. | `number` | `-1` | no |
 | egress_to_port | Ending port for the outbound security group rule. Not applicable when the protocol is `-1` (all traffic). | `number` | `0` | no |
 | enable_aws_efs_file_system_policy | Enable or disable the EFS file system policy. Defaults to `false`. | `bool` | `false` | no |
+| enable_egress_rule | Set to `false` to skip creating the egress rules from `egress_cidr_blocks`. | `bool` | `true` | no |
+| enable_ingress_cidr_rule | Set to `false` to skip creating NFS ingress rules from the CIDR blocks in `allow_cidr`. | `bool` | `true` | no |
+| enable_ingress_security_group_rule | Set to `false` to skip creating NFS ingress rules from the security groups in `security_groups`. | `bool` | `true` | no |
+| enable_mount_target | Set to `false` to skip creating the EFS mount targets. | `bool` | `true` | no |
+| enable_security_group | Set to `false` to skip creating the EFS security group (and its rules). | `bool` | `true` | no |
 | encrypted | If `true`, the EFS file system will be encrypted at rest. | `bool` | `true` | no |
 | environment | Environment (e.g. `prod`, `dev`, `staging`). | `string` | `"test"` | no |
 | from_port | Starting port for the NFS ingress security group rule. Defaults to TCP port `2049`. | `number` | `2049` | no |
@@ -34,6 +39,7 @@
 | security_groups | List of existing security group IDs allowed to access EFS over NFS (TCP/2049). Each security group ID is managed as a separate ingress rule. | `list(string)` | n/a | yes |
 | source_policy_documents | List of IAM policy documents that are merged together into the exported document. Statements must have unique `sid` values. | `list(string)` | `[]` | no |
 | subnets | List of subnet IDs in which EFS mount targets will be created. | `list(string)` | n/a | yes |
+| tags | Additional tags to apply to all resources created by this module. | `map(string)` | `{}` | no |
 | throughput_mode | Throughput mode for the EFS file system. Valid values are `bursting` and `provisioned`. When using `provisioned`, also set `provisioned_throughput_in_mibps`. | `string` | `"bursting"` | no |
 | to_port | Ending port for the NFS ingress security group rule. Defaults to TCP port `2049`. | `number` | `2049` | no |
 | vpc_id | ID of the VPC in which the EFS security group will be created. | `string` | n/a | yes |

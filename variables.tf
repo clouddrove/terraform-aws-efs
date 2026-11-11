@@ -24,6 +24,12 @@ variable "managedby" {
   description = "ManagedBy, eg 'CloudDrove'."
 }
 
+variable "tags" {
+  type        = map(string)
+  default     = {}
+  description = "Additional tags to apply to all resources created by this module."
+}
+
 # Module      : EFS
 # Description : Terraform EFS  module variables.
 variable "security_groups" {
@@ -34,30 +40,30 @@ variable "security_groups" {
 variable "from_port" {
   type        = number
   default     = 2049
-  description = "Security group IDs to allow access to the EFS"
+  description = "Starting port for the NFS ingress security group rule."
 }
 
 variable "to_port" {
   type        = number
   default     = 2049
-  description = "Security group IDs to allow access to the EFS"
+  description = "Ending port for the NFS ingress security group rule."
 }
 
 variable "egress_from_port" {
   type        = number
   default     = 0
-  description = "Security group IDs to allow access to the EFS"
+  description = "Starting port for the outbound security group rule. Ignored when `egress_protocol` is `-1`."
 }
 variable "egress_to_port" {
   type        = number
   default     = 0
-  description = "Security group IDs to allow access to the EFS"
+  description = "Ending port for the outbound security group rule. Ignored when `egress_protocol` is `-1`."
 }
 
 variable "protocol" {
   type        = string
   default     = "tcp"
-  description = "Security group IDs to allow access to the EFS"
+  description = "IP protocol for the NFS ingress security group rules."
 }
 
 variable "egress_protocol" {
@@ -69,18 +75,49 @@ variable "egress_protocol" {
 variable "egress_cidr_blocks" {
   type        = list(string)
   default     = ["0.0.0.0/0"]
-  description = "Security group IDs to allow access to the EFS"
+  description = "List of IPv4 CIDR blocks allowed for outbound traffic from the EFS security group."
 }
 
-variable "efs_enabled" {
+variable "enabled" {
   type        = bool
   default     = true
-  description = "Set to false to prevent the module from creating any resources"
+  description = "Whether to create this resource or not?"
 }
+
 variable "replication_enabled" {
   type        = bool
   default     = true
-  description = "Set to false to prevent the module from creating any resources"
+  description = "Set to `false` to skip creating the EFS replication configuration."
+}
+
+variable "enable_mount_target" {
+  type        = bool
+  default     = true
+  description = "Set to `false` to skip creating the EFS mount targets."
+}
+
+variable "enable_security_group" {
+  type        = bool
+  default     = true
+  description = "Set to `false` to skip creating the EFS security group (and its rules)."
+}
+
+variable "enable_ingress_security_group_rule" {
+  type        = bool
+  default     = true
+  description = "Set to `false` to skip creating NFS ingress rules from the security groups in `security_groups`."
+}
+
+variable "enable_ingress_cidr_rule" {
+  type        = bool
+  default     = true
+  description = "Set to `false` to skip creating NFS ingress rules from the CIDR blocks in `allow_cidr`."
+}
+
+variable "enable_egress_rule" {
+  type        = bool
+  default     = true
+  description = "Set to `false` to skip creating the egress rules from `egress_cidr_blocks`."
 }
 
 variable "creation_token" {
@@ -159,13 +196,15 @@ variable "allow_cidr" {
 }
 
 variable "access_point_enabled" {
-  type    = bool
-  default = true
+  type        = bool
+  default     = true
+  description = "Set to `false` to skip creating the EFS access point."
 }
 
 variable "mount_target_description" {
-  type    = string
-  default = "this is mount target security group "
+  type        = string
+  default     = "this is mount target security group "
+  description = "Description of the security group attached to the EFS mount targets."
 }
 
 variable "bypass_policy_lockout_safety_check" {

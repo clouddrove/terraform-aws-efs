@@ -1,12 +1,14 @@
 provider "aws" {
-  region = "us-east-1"
+  region = local.region
 }
 
 locals {
   name               = "clouddrove"
+  region             = "us-east-1"
+  replica_region     = "eu-west-2"
   environment        = "test"
   label_order        = ["environment", "name"]
-  availability_zones = ["us-east-1a", "us-east-1b"]
+  availability_zones = ["${local.region}a", "${local.region}b"]
 }
 
 module "vpc" {
@@ -48,6 +50,6 @@ module "efs" {
   allow_cidr                = [module.vpc.vpc_cidr_block] #vpc_cidr
   replication_enabled       = true
   replication_configuration_destination = {
-    region = "eu-west-2"
+    region = local.replica_region
   }
 }

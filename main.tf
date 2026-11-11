@@ -14,7 +14,7 @@ module "label" {
   environment = var.environment
   label_order = var.label_order
   managedby   = var.managedby
-  enabled     = var.efs_enabled
+  extra_tags  = var.tags
 }
 
 ##------------------------------------------------------------------------------
@@ -22,7 +22,7 @@ module "label" {
 ##------------------------------------------------------------------------------
 
 resource "aws_efs_file_system" "default" {
-  count = var.efs_enabled ? 1 : 0
+  count = var.enabled ? 1 : 0
 
   creation_token                  = var.creation_token
   encrypted                       = var.encrypted
@@ -39,12 +39,12 @@ resource "aws_efs_file_system" "default" {
 ##------------------------------------------------------------------------------
 
 resource "aws_efs_mount_target" "default" {
-  count = var.efs_enabled ? length(nonsensitive(var.availability_zones)) : 0
+  count = var.enabled && var.enable_mount_target ? length(nonsensitive(var.availability_zones)) : 0
 
   file_system_id  = aws_efs_file_system.default[0].id
   ip_address      = var.mount_target_ip_address
   subnet_id       = var.subnets[count.index]
-  security_groups = [aws_security_group.default[0].id]
+  security_groups = aws_security_group.default[*].id
 }
 
 ##------------------------------------------------------------------------------
@@ -52,7 +52,7 @@ resource "aws_efs_mount_target" "default" {
 ##------------------------------------------------------------------------------
 
 resource "aws_security_group" "default" {
-  count = var.efs_enabled ? 1 : 0
+  count = var.enabled && var.enable_security_group ? 1 : 0
 
   name        = module.label.id
   description = var.mount_target_description
@@ -70,7 +70,7 @@ resource "aws_security_group" "default" {
 ##------------------------------------------------------------------------------
 
 resource "aws_vpc_security_group_ingress_rule" "nfs_security_group" {
-  for_each = var.efs_enabled ? {
+  for_each = var.enabled && var.enable_security_group && var.enable_ingress_security_group_rule ? {
     for index, sg_id in nonsensitive(var.security_groups) :
     tostring(index) => sg_id
   } : {}
@@ -90,7 +90,7 @@ resource "aws_vpc_security_group_ingress_rule" "nfs_security_group" {
 ##------------------------------------------------------------------------------
 
 resource "aws_vpc_security_group_ingress_rule" "nfs_cidr" {
-  for_each = var.efs_enabled ? toset(var.allow_cidr) : toset([])
+  for_each = var.enabled && var.enable_security_group && var.enable_ingress_cidr_rule ? toset(var.allow_cidr) : toset([])
 
   security_group_id = aws_security_group.default[0].id
   cidr_ipv4         = each.value
@@ -108,7 +108,7 @@ resource "aws_vpc_security_group_ingress_rule" "nfs_cidr" {
 
 #tfsec:ignore:aws-vpc-no-public-egress-sgr
 resource "aws_vpc_security_group_egress_rule" "default" {
-  for_each = var.efs_enabled ? toset(var.egress_cidr_blocks) : toset([])
+  for_each = var.enabled && var.enable_security_group && var.enable_egress_rule ? toset(var.egress_cidr_blocks) : toset([])
 
   security_group_id = aws_security_group.default[0].id
   cidr_ipv4         = each.value
@@ -127,7 +127,7 @@ resource "aws_vpc_security_group_egress_rule" "default" {
 ##------------------------------------------------------------------------------
 
 resource "aws_efs_backup_policy" "policy" {
-  count = var.efs_enabled && var.efs_backup_policy_enabled ? 1 : 0
+  count = var.enabled && var.efs_backup_policy_enabled ? 1 : 0
 
   file_system_id = aws_efs_file_system.default[0].id
 
@@ -141,7 +141,7 @@ resource "aws_efs_backup_policy" "policy" {
 ##------------------------------------------------------------------------------
 
 resource "aws_efs_access_point" "default" {
-  count = var.efs_enabled && var.access_point_enabled ? 1 : 0
+  count = var.enabled && var.access_point_enabled ? 1 : 0
 
   file_system_id = aws_efs_file_system.default[0].id
 
@@ -154,7 +154,7 @@ resource "aws_efs_access_point" "default" {
 
 resource "aws_efs_replication_configuration" "this" {
   count = (
-    var.efs_enabled &&
+    var.enabled &&
     var.replication_enabled &&
     try(length(var.replication_configuration_destination), 0) > 0
   ) ? 1 : 0
@@ -182,7 +182,7 @@ resource "aws_efs_replication_configuration" "this" {
 
 resource "aws_efs_file_system_policy" "this" {
   count = (
-    var.efs_enabled &&
+    var.enabled &&
     var.enable_aws_efs_file_system_policy
   ) ? 1 : 0
 
@@ -197,7 +197,7 @@ resource "aws_efs_file_system_policy" "this" {
 
 data "aws_iam_policy_document" "policy" {
   count = (
-    var.efs_enabled &&
+    var.enabled &&
     var.enable_aws_efs_file_system_policy
   ) ? 1 : 0
 
